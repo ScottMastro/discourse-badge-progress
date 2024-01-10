@@ -1,0 +1,114 @@
+{{#if this.siteSettings.badge_extension_enabled}}
+<div hidden>{{this.currentRouteWatcher}}</div>
+
+<div class="extended-admin-settings">
+
+  <details class="control-group">
+  <summary>{{i18n "badge_extension.admin.edit_groups"}}</summary>
+
+  <div class="extended-admin-badge-group">
+
+    <div class="control-group">
+      <label for="badge_grouping_id">
+        {{i18n "badge_extension.admin.group_select"}}
+      </label>
+
+      <div class="badge-grouping-control">
+        <ComboBox
+          @name="badge_grouping_id"
+          @value={{this.currentGroupId}}
+          @content={{this.badgeGroupings}}
+          class="badge-selector"
+          @nameProperty="name"
+          @onChange={{this.updateBadgeGroupId}}
+        />
+      </div>
+    </div>
+    
+  {{#if this.currentGroupId}}
+
+    <div class="control-group">
+      <div>
+        <label>
+          <Input
+            @type="checkbox"
+            @checked={{this.showOnProgressPage}}
+          />
+          {{i18n "badge_extension.admin.show_progress"}}
+        </label>
+      </div>
+
+      <div>
+        <label>
+          <Input
+            @type="checkbox"
+            @checked={{this.isQuantitative}}
+          />
+          {{i18n "badge_extension.admin.quantitative"}}
+        </label>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="query">{{i18n "badge_extension.admin.progress_query"}}</label>
+      <AceEditor
+        @content={{this.progressQuery}}
+        @mode="sql"
+        @disabled={{not this.showOnProgressPage}}
+      />
+      {{i18n "badge_extension.admin.progress_query_info"}}
+    </div>
+  {{/if}}
+
+  </div>
+  </details>
+
+<div class="control-group">
+  <form class="form-horizontal">
+      <label for="requirement">{{i18n "badge_extension.admin.badge_requirement"}}</label>
+
+      <NumberField
+        @value={{this.badgeRequirement}}
+        name="requirement"
+        @classNames="input-setting-integer"
+        @min=null
+        @max=null
+      />
+  </form>
+
+  <div>
+    <label>
+      <Input
+        @type="checkbox"
+        @checked={{this.allowClaim}}
+      />
+      {{i18n "badge_extension.admin.allow_claim"}}
+    </label>
+  </div>
+
+  <div>
+    <label>
+      <Input
+        @type="checkbox"
+        @checked={{this.showEarned}}
+      />
+      {{i18n "badge_extension.admin.show_earned"}}
+    </label>
+  </div>
+
+</div>
+
+<div class="control-group">      
+    <DButton
+      @action={{this.save}}
+      @disabled={{this.saving}}
+      @label="badge_extension.admin.save"
+      type="submit"
+      class="btn-primary"
+    />
+    <span class="saving">{{this.savingStatus}}</span>
+</div>
+</div>
+
+<br>
+{{/if}}

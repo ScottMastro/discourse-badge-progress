@@ -1,0 +1,14 @@
+en:
+  js:
+    badge_extension:
+      admin:
+        edit_groups: "Edit groups"
+        show_progress: "Show group on the badge progress page"
+        quantitative: "Badge group is quantitative"
+        show_earned: "Show badge on the badge progress page if earned"
+        allow_claim: "Allow users to claim badge from interface"
+        badge_requirement: "Badge Requirement"
+        progress_query: "Progress Query (SQL)"
+        progress_query_info: "SQL query should return a single value. Use :id to reference user id"
+        save: "Save (extended features only)"
+        group_select: "Group to edit"
