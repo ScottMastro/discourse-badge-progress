@@ -67,10 +67,10 @@
   <form class="form-horizontal">
       <label for="requirement">{{i18n "badge_extension.admin.badge_requirement"}}</label>
 
-      <NumberField
+      <Input
         @value={{this.badgeRequirement}}
         name="requirement"
-        @classNames="input-setting-integer"
+        @type="text"
         @min=null
         @max=null
       />

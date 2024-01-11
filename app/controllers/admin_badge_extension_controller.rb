@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class BadgeExtension::AdminBadgeExtensionController < ::ApplicationController
-  def index
-    
-    user_badges = current_user.badges
-    all_badges = Badge.all
-
-    render json: { user_badges: user_badges, all_badges: all_badges }
-  end
 
   def get_group_info
     group_id = params[:group_id]

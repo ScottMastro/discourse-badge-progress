@@ -33,7 +33,8 @@ export default class AdminBadgesAdditionalSettings extends Component {
   }
 
   loadBadgeData() {
-    let badge_id = this.router.currentRoute.params.badge_id;
+    this.currentGroupId = null;
+    const badge_id = this.router.currentRoute.params.badge_id;
     if (badge_id){
       this.currentBadgeId = badge_id;
     }

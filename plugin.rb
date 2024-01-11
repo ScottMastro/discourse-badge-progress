@@ -9,8 +9,8 @@
 
 enabled_site_setting :badge_extension_enabled
 
-register_asset 'stylesheets/common/common.scss'
-register_asset 'stylesheets/mobile/mobile.scss', :mobile
+register_asset 'stylesheets/common/my_badges.scss'
+register_asset 'stylesheets/mobile/my_badges_mobile.scss', :mobile
 
 register_asset 'stylesheets/common/admin_badges.scss'
 
@@ -30,8 +30,8 @@ after_initialize do
   require_relative 'app/controllers/admin_badge_extension_controller.rb'
 
   BadgeExtension::Engine.routes.draw do
-    get '/mybadges' => 'badge_extension#index'
-    get '/admin/badge_extension' => 'admin_badge_extension#index', constraints: StaffConstraint.new
+    get '/mybadges' => 'badge_extension#my_badges'
+    #get '/admin/badge_extension' => 'admin_badge_extension#index', constraints: StaffConstraint.new
     get '/admin/badge_extension/group/:group_id' => 'admin_badge_extension#get_group_info', constraints: StaffConstraint.new
     post '/admin/badge_extension/save' => 'admin_badge_extension#save', constraints: StaffConstraint.new
 

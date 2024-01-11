@@ -1,0 +1,52 @@
+<section class="my-badges">
+
+
+
+  {{#if this.isLoading}}
+    <div class="loading-indicator">Loading...</div>
+  {{else}}
+
+  <div class="medal-container">
+    
+    <div class="medal">
+      <h1><div class="gold">{{d-icon "certificate"}} 1</div></h1>
+    </div>
+    <div class="medal">
+       <h1><div class="silver">{{d-icon "certificate"}} 2</div></h1>
+    </div>
+    <div class="medal">
+       <h1><div class="bronze">{{d-icon "certificate"}} 3</div></h1>
+    </div>
+  </div>
+
+
+    {{#each this.badgeGroups as |group|}}
+      <h3>{{group.name}}</h3>
+      <div class="badge-group-container">
+        {{#each group.badges as |badge|}}
+
+          <div class="badge-container">
+
+            <div class="badge-image-container">
+
+              <img class="badge-image" src="https://picsum.photos/300/300">
+              <div class="light"></div>
+
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="w:{{badge.progress}};"></div>
+            </div>
+
+            <button {{action collectBadge badge.id }} class="btn btn-text btn-primary badge-collect-button">{{ i18n "badge_extension.mybadge.collect" }}</button>
+
+            <div class="badge-requirement-info">
+              {{number badge.requirement}} /{{number badge.progress}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/each}}
+  
+  
+  {{/if}}
+</section>

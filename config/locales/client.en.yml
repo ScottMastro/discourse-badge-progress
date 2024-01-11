@@ -9,6 +9,9 @@ en:
         allow_claim: "Allow users to claim badge from interface"
         badge_requirement: "Badge Requirement"
         progress_query: "Progress Query (SQL)"
-        progress_query_info: "SQL query should return a single value. Use :id to reference user id"
+        progress_query_info: "SQL query should return a single value. Use ? to reference user id"
         save: "Save (extended features only)"
         group_select: "Group to edit"
+
+      mybadge:
+        collect: "Collect"
