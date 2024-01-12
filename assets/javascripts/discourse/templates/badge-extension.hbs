@@ -1,5 +1,6 @@
 <section class="my-badges">
 
+  <div class="sparkle-effect"></div>
 
 
   {{#if this.isLoading}}
@@ -24,15 +25,29 @@
       <h3>{{group.name}}</h3>
       <div class="badge-group-container">
         {{#each group.badges as |badge|}}
-
           <div class="badge-container">
+            {{badge.name}}
+            
 
-            <div class="badge-image-container">
+            {{#if badge.image_url}}
 
-              <img class="badge-image" src="https://picsum.photos/300/300">
-              <div class="light"></div>
+              <div class="badge-image-container">
+                <div class="sparkle-effect"></div>
 
-            </div>
+                <img class="badge-image" src="{{badge.image_url}}">
+
+              </div>
+
+            {{else}}
+
+              <div class="badge-image-container">
+                <div class="sparkle-effect"></div>
+
+                <div class="badge-icon">{{icon-or-image badge}}</div>
+              </div>
+
+            {{/if}}
+
             <div class="progress-bar-container">
               <div class="progress-bar" style="w:{{badge.progress}};"></div>
             </div>

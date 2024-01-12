@@ -50,8 +50,6 @@
     align-items: center;
     max-width: 60px;
     row-gap: 1em;
-
-
   }
 
   .badge-image-container {
@@ -59,29 +57,26 @@
     height: 60px;
     overflow: hidden;
     cursor : pointer;
-    transition : .6s;
-
-    .light {
-      width : 20px;
-      height: 60px;
-
-      background-color: rgba(255, 255, 255, 1);
-      transform: skew(-20deg) translate(-120px, -60px);
-    }
+    transition : .1s;
 
     &:hover {
       transform: scale(1.1);
-      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.35);
-
-      .light {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: skew(-20deg) translate(60px, -60px);
-        transition : .7s;
-      }
     }
   }
-  
+
   .badge-image{
+    z-index: 1;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .badge-icon{
+    z-index: 1;
+    .svg-icon{
+      width: 60px;
+      height: 60px;
+    }
+
     width: 60px;
     height: 60px;
   }
@@ -95,19 +90,39 @@
     overflow: scroll;
   }
 
-
-
   .progress-bar-container {
     height: 10px;
     width: 60px;
   }
 
   .progress-bar {
-    background-color: green;
+    background-color: var(--tertiary-very-low);
     height: 100%;
     border-radius: 2px;
   }
+    
+  .sparkle-effect {
+    position: absolute;
+    z-index: 2;
+    width: 60px;
+    height: 60px;
+    background-image: url('/assets/images/sparkle_sheet_60.png');
+    background-repeat: no-repeat;
+  }
   
-
-
+  @keyframes spriteAnimation {
+    0% { background-position: 0 0; }
+    100% { background-position: -1680px 0; }
+  }
+  
+  .animate-sparkle {
+    animation: spriteAnimation 0.5s steps(28) forwards;
+  }
+  
 }
+
+.badge-container {
+  position: relative;
+  display: inline-block; /* or 'block', depending on layout needs */
+}
+

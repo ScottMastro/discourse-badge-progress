@@ -9,9 +9,10 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
       progress = execute_progress_query(badge_group.progress_query, user_id)
 
       # Fetch badges associated with the current badge group
-      badges = Badge.where(badge_grouping_id: badge_group.id).map do |badge|
-
-        badge.attributes.merge({ progress: progress })
+      badges = Badge.where(badge_grouping_id: badge_group.id, enabled: true)
+        .sort_by { |badge| sort_badges_by_requirement(badge) }
+        .map do |badge|
+          badge.as_json.merge(image_url: badge.image_url, progress: progress)
       end
   
       # Merge badge group attributes with its badges
@@ -23,6 +24,15 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
   
   private
 
+  def sort_badges_by_requirement(badge)
+    begin
+      Float(badge.requirement)
+    rescue ArgumentError, TypeError
+      nil
+    end
+  end
+  
+
   def execute_progress_query(query, user_id)
     #todo: maybe we can normalize to a percentage
     #check if matches target otherwise?
@@ -33,4 +43,10 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
     result.rows.empty? ? nil : result.rows[0][0]  
   end
 
+  def image_url
+    upload_cdn_path(image_upload.url) if image_upload_id.present?
+  end
+
 end
+
+# https://github.com/discourse/discourse/blob/main/app/controllers/user_badges_controller.rb
