@@ -1,3 +1,4 @@
 en:
   site_settings:
-    badge_extension_enabled: 'Turn on the badge extension feature'
+    badge_progress_enabled: 'Turn on the badge extension feature'
+    badge_sparkle_effect: 'Show sparkle effect on badge progress page'

@@ -1,7 +1,6 @@
+{{#if this.siteSettings.badge_progress_enabled}}
+
 <section class="my-badges">
-
-  <div class="sparkle-effect"></div>
-
 
   {{#if this.isLoading}}
     <div class="loading-indicator">Loading...</div>
@@ -10,13 +9,13 @@
   <div class="medal-container">
     
     <div class="medal">
-      <h1><div class="gold">{{d-icon "certificate"}} 1</div></h1>
+      <h1><div class="gold">{{d-icon "certificate"}} {{goldCount}}</div></h1>
     </div>
     <div class="medal">
-       <h1><div class="silver">{{d-icon "certificate"}} 2</div></h1>
+       <h1><div class="silver">{{d-icon "certificate"}} {{silverCount}}</div></h1>
     </div>
     <div class="medal">
-       <h1><div class="bronze">{{d-icon "certificate"}} 3</div></h1>
+       <h1><div class="bronze">{{d-icon "certificate"}} {{bronzeCount}}</div></h1>
     </div>
   </div>
 
@@ -29,24 +28,24 @@
             {{badge.name}}
             
 
-            {{#if badge.image_url}}
+            <div class="badge-image-container">
 
-              <div class="badge-image-container">
+              {{#if this.siteSettings.badge_sparkle_effect}}
+              {{#if (gt badge.user_badge 0)}}
                 <div class="sparkle-effect"></div>
+              {{/if}}
+              {{/if}}
 
-                <img class="badge-image" src="{{badge.image_url}}">
 
-              </div>
 
-            {{else}}
+              {{#if badge.image_url}}
+                <img class="badge-image {{if (eq badge.user_badge 0) "badge-not-acquired"}}" src="{{badge.image_url}}">
+              {{else}}
+                <div class="badge-icon {{if (eq badge.user_badge 0) "badge-not-acquired"}}">{{icon-or-image badge}}</div>
+              {{/if}}
 
-              <div class="badge-image-container">
-                <div class="sparkle-effect"></div>
+            </div>
 
-                <div class="badge-icon">{{icon-or-image badge}}</div>
-              </div>
-
-            {{/if}}
 
             <div class="progress-bar-container">
               <div class="progress-bar" style="w:{{badge.progress}};"></div>
@@ -55,7 +54,7 @@
             <button {{action collectBadge badge.id }} class="btn btn-text btn-primary badge-collect-button">{{ i18n "badge_extension.mybadge.collect" }}</button>
 
             <div class="badge-requirement-info">
-              {{number badge.requirement}} /{{number badge.progress}}
+              {{number badge.progress}} / {{number badge.requirement}}
             </div>
           </div>
         {{/each}}
@@ -65,3 +64,4 @@
   
   {{/if}}
 </section>
+{{/if}}

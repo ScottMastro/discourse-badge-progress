@@ -7,7 +7,7 @@
 # url: https://github.com/ScottMastro/discourse-badge-progress
 # transpile_js: true
 
-enabled_site_setting :badge_extension_enabled
+enabled_site_setting :badge_progress_enabled
 
 register_asset 'stylesheets/common/my_badges.scss'
 register_asset 'stylesheets/mobile/my_badges_mobile.scss', :mobile

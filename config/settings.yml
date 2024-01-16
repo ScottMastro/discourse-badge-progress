@@ -1,4 +1,8 @@
 plugins:
-  badge_extension_enabled:
+  badge_progress_enabled:
+    default: true
+    client: true
+
+  badge_sparkle_effect:
     default: true
     client: true

@@ -12,14 +12,21 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
       badges = Badge.where(badge_grouping_id: badge_group.id, enabled: true)
         .sort_by { |badge| sort_badges_by_requirement(badge) }
         .map do |badge|
-          badge.as_json.merge(image_url: badge.image_url, progress: progress)
+
+          user_badge_count = UserBadge.where(badge_id: badge.id, user_id: user_id).count
+          badge.as_json.merge(image_url: badge.image_url, progress: progress, user_badge: user_badge_count)
       end
   
       # Merge badge group attributes with its badges
       badge_group.attributes.merge({ badges: badges })
     end
+    user_badges = UserBadge.joins(:badge).where(user_id: user_id)
+    badge_counts = user_badges.group('badges.badge_type_id').count
+    gold_count = badge_counts[1] || 0
+    silver_count = badge_counts[2] || 0
+    bronze_count = badge_counts[3] || 0
   
-    render json: { badge_groups: badge_groups }
+    render json: { badge_groups: badge_groups, gold_count: gold_count, silver_count: silver_count, bronze_count: bronze_count }
   end
   
   private
@@ -34,13 +41,17 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
   
 
   def execute_progress_query(query, user_id)
-    #todo: maybe we can normalize to a percentage
-    #check if matches target otherwise?
-    placeholder_count = query.count('?')
-    parameters = Array.new(placeholder_count, user_id)
-    sanitized_query = ActiveRecord::Base.sanitize_sql_array([query, *parameters])
-    result = ActiveRecord::Base.connection.exec_query(sanitized_query)
-    result.rows.empty? ? nil : result.rows[0][0]  
+    begin
+      #todo: maybe we can normalize to a percentage
+      #check if matches target otherwise?
+      placeholder_count = query.count('?')
+      parameters = Array.new(placeholder_count, user_id)
+      sanitized_query = ActiveRecord::Base.sanitize_sql_array([query, *parameters])
+      result = ActiveRecord::Base.connection.exec_query(sanitized_query)
+      result.rows.empty? ? nil : result.rows[0][0]
+    rescue  
+      nil
+    end
   end
 
   def image_url
