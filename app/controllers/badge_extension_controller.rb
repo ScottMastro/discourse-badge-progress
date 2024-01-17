@@ -6,7 +6,7 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
     user_id = current_user.id
   
     badge_groups = BadgeGrouping.where(show_progress: true).map do |badge_group|
-      progress = execute_progress_query(badge_group.progress_query, user_id)
+      progress = execute_progress_query(badge_group.progress_query, user_id).to_f
 
       # Fetch badges associated with the current badge group
       badges = Badge.where(badge_grouping_id: badge_group.id, enabled: true)
@@ -14,11 +14,13 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
         .map do |badge|
 
           user_badge_count = UserBadge.where(badge_id: badge.id, user_id: user_id).count
-          badge.as_json.merge(image_url: badge.image_url, progress: progress, user_badge: user_badge_count)
-      end
+          
+          percent_complete = calculate_percent_complete(progress, badge.requirement.to_f)
+          badge.as_json.merge(image_url: badge.image_url, user_badge: user_badge_count, percent_complete: percent_complete)
+    end
   
       # Merge badge group attributes with its badges
-      badge_group.attributes.merge({ badges: badges })
+      badge_group.attributes.merge({ badges: badges, progress: progress })
     end
     user_badges = UserBadge.joins(:badge).where(user_id: user_id)
     badge_counts = user_badges.group('badges.badge_type_id').count
@@ -38,7 +40,12 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
       nil
     end
   end
-  
+  def calculate_percent_complete(progress, requirement)
+    return 0 if requirement.to_f <= 0
+
+    division_result = progress.to_f / requirement.to_f
+    division_result.nan? ? 0 : [division_result, 1].min
+  end
 
   def execute_progress_query(query, user_id)
     begin

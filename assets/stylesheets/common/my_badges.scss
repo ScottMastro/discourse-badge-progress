@@ -2,19 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-
+  
   .medal {
-    display: flex;
-    align-items: center;
-    margin-right: 20px; /* Adjust spacing as needed */
-  }
-
-  .circle {
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    border-radius: 50%;
-    margin-right: 10px;
+    padding: 0.5em;
+    font-size: xx-large;
   }
 
   .gold {
@@ -22,39 +13,46 @@
   } .silver {
     color: var(--silver);
   } .bronze {
-    color: var(--bronze); /* Bronze color */
+    color: var(--bronze);
   }
 
 
 }
 
+.mybadge-container{
+  margin-bottom: 1em;
+  background-color: var(--blend-primary-secondary-5);
+  border-radius: 6px;
+  width: fit-content;
+}
+
 .my-badges {
+  
+  --badge-size: 50px;
+  --sparkle-scale: calc(400/50);
+
+  .badge-group-label{
+    font-size: x-large;
+  }
 
   .badge-group-container {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    background-color: var(--blend-primary-secondary-5);
-    padding: 1em;
-    column-gap: 1em;
-    margin-bottom: 1em;
+
   }
 
   .badge-container {
-    margin-bottom: 10px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--primary-300);
-    padding: 1em;
+    padding: 0.5em;
     justify-content: center;
     align-items: center;
-    max-width: 60px;
-    row-gap: 1em;
+    max-width: var(--badge-size);
   }
 
   .badge-image-container {
     
-    height: 60px;
     overflow: hidden;
     cursor : pointer;
     transition : .1s;
@@ -66,63 +64,64 @@
 
   .badge-image{
     z-index: 1;
-    width: 60px;
-    height: 60px;
+    width: var(--badge-size);
+    height: var(--badge-size);
   }
   
   .badge-icon{
     z-index: 1;
     .svg-icon{
-      width: 60px;
-      height: 60px;
+      width: var(--badge-size);
+      height: var(--badge-size);
     }
-
-    width: 60px;
-    height: 60px;
   }
 
   .badge-not-acquired{
-    filter:brightness(0.2) blur(2px);
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .badge-requirement-info{
+    font-size: large;
     white-space: nowrap;
     overflow: scroll;
   }
 
   .progress-bar-container {
     height: 10px;
-    width: 60px;
+    width: var(--badge-size);
   }
 
   .progress-bar {
     background-color: var(--tertiary-very-low);
-    height: 100%;
+    height: 5px;
     border-radius: 2px;
   }
     
   .sparkle-effect {
     position: absolute;
     z-index: 2;
-    width: 60px;
-    height: 60px;
-    background-image: url('/assets/images/sparkle_sheet_60.png');
+    width: var(--badge-size);
+    height: var(--badge-size);
+    background-image: url('/assets/images/sparkle_sheet.png');
     background-repeat: no-repeat;
+    background-size: cover;
   }
   
   @keyframes spriteAnimation {
     0% { background-position: 0 0; }
-    100% { background-position: -1680px 0; }
+    100% { background-position: calc(-11200px / var(--sparkle-scale)) 0; }
   }
   
   .animate-sparkle {
     animation: spriteAnimation 0.5s steps(28) forwards;
   }
-  
 }
 
 .badge-container {
   position: relative;
-  display: inline-block; /* or 'block', depending on layout needs */
+  display: block;
 }
 

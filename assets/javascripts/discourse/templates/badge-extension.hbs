@@ -1,49 +1,52 @@
 {{#if this.siteSettings.badge_progress_enabled}}
+{{#if this.isLoading}}
+  <div class="loading-indicator">Loading...</div>
+{{else}}
 
 <section class="my-badges">
 
-  {{#if this.isLoading}}
-    <div class="loading-indicator">Loading...</div>
-  {{else}}
-
-  <div class="medal-container">
+  <div class="medal-container mybadge-container">
     
-    <div class="medal">
-      <h1><div class="gold">{{d-icon "certificate"}} {{goldCount}}</div></h1>
-    </div>
-    <div class="medal">
-       <h1><div class="silver">{{d-icon "certificate"}} {{silverCount}}</div></h1>
-    </div>
-    <div class="medal">
-       <h1><div class="bronze">{{d-icon "certificate"}} {{bronzeCount}}</div></h1>
-    </div>
+      <div class="medal gold">{{d-icon "certificate"}} {{goldCount}}</div>
+      <div class="medal silver">{{d-icon "certificate"}} {{silverCount}}</div>
+      <div class="medal bronze">{{d-icon "certificate"}} {{bronzeCount}}</div>
   </div>
 
 
     {{#each this.badgeGroups as |group|}}
-      <h3>{{group.name}}</h3>
-      <div class="badge-group-container">
+      <div class="badge-group-label">
+        {{group.name}} : {{number group.progress}}</div> 
+      <div class="badge-group-container mybadge-container">
         {{#each group.badges as |badge|}}
           <div class="badge-container">
-            {{badge.name}}
+            {{!-- <div class="badge-name"> {{badge.name}} </div> --}}
             
 
             <div class="badge-image-container">
 
               {{#if this.siteSettings.badge_sparkle_effect}}
-              {{#if (gt badge.user_badge 0)}}
-                <div class="sparkle-effect"></div>
+                {{#if (gt badge.user_badge 0)}}
+                  <div class="sparkle-effect"></div>
+                {{/if}}
               {{/if}}
-              {{/if}}
 
 
-
-              {{#if badge.image_url}}
-                <img class="badge-image {{if (eq badge.user_badge 0) "badge-not-acquired"}}" src="{{badge.image_url}}">
+              {{#if (eq badge.user_badge 0)}}
+                  <div class="badge-image badge-not-acquired">{{d-icon "question-circle"}}</div>
               {{else}}
-                <div class="badge-icon {{if (eq badge.user_badge 0) "badge-not-acquired"}}">{{icon-or-image badge}}</div>
+
+                {{#if badge.image_url}}
+                  <img class="badge-image" src="{{badge.image_url}}">
+                {{else}}
+                  <div class="badge-image badge-icon">{{icon-or-image badge}}</div>
+                {{/if}}
+
               {{/if}}
 
+            </div>
+
+            <div class="badge-requirement-info">
+              {{number badge.requirement}}
             </div>
 
 
@@ -51,17 +54,17 @@
               <div class="progress-bar" style="w:{{badge.progress}};"></div>
             </div>
 
-            <button {{action collectBadge badge.id }} class="btn btn-text btn-primary badge-collect-button">{{ i18n "badge_extension.mybadge.collect" }}</button>
+            {{!--<button {{action collectBadge badge.id }} class="btn btn-text btn-primary badge-collect-button">
+              {{ i18n "badge_extension.mybadge.collect" }}
+            </button>--}}
 
-            <div class="badge-requirement-info">
-              {{number badge.progress}} / {{number badge.requirement}}
-            </div>
           </div>
         {{/each}}
       </div>
     {{/each}}
   
   
-  {{/if}}
 </section>
+
+{{/if}}
 {{/if}}
