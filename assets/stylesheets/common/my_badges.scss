@@ -1,36 +1,85 @@
+#mybadge-info-container {
+  position: fixed;
+  top: 30%; /* Adjust as needed */
+  right: 5%;
+  transform: translateY(-50%); /* Center it vertically */
+  width: 400px; 
+  height: auto; 
+  z-index: 900; 
+
+  background: var(--secondary);
+  border-style: solid;
+  border-width: 10px;
+  border-color: var(--blend-primary-secondary-5);
+
+  padding: 10px;
+  display: flex;
+  column-gap: 10px;
+  align-items: center ;
+
+  .badge-image{
+    width: 100px;
+    height: 100px
+  }
+
+  .badge-info-name{
+    font-size: var(--font-up-3);
+  }
+  .badge-info-awarded{
+    font-size: var(--font-down-1);
+    color: var(--primary-medium);
+  }
+  .badge-info-long-description{
+    background-color: var(--blend-primary-secondary-5);
+    font-style: italic;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+  }
+}
+
 .medal-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   .medal {
     padding: 0.5em;
     font-size: xx-large;
-  }
+  } 
+}
 
-  .gold {
-    color: var(--gold);
-  } .silver {
-    color: var(--silver);
-  } .bronze {
-    color: var(--bronze);
-  }
-
-
+.medal-gold {
+  color: var(--gold);
+} .medal-silver {
+  color: var(--silver);
+} .medal-bronze {
+  color: var(--bronze);
 }
 
 .mybadge-container{
+  display: flex;
+  align-items: center;
   margin-bottom: 1em;
   background-color: var(--blend-primary-secondary-5);
   border-radius: 6px;
   width: fit-content;
+
+  .user-info{
+    margin-left: 1em;
+  }
 }
 
 .my-badges {
   
   --badge-size: 50px;
-  --sparkle-scale: calc(400/50);
 
+  .badge-group-label-container{
+    display: flex;
+    align-items: baseline;
+    column-gap: 1em;
+  }
   .badge-group-label{
     font-size: x-large;
   }
@@ -38,7 +87,6 @@
   .badge-group-container {
     display: flex;
     flex-wrap: wrap;
-
   }
 
   .badge-container {
@@ -52,7 +100,6 @@
   }
 
   .badge-image-container {
-    
     overflow: hidden;
     cursor : pointer;
     transition : .1s;
@@ -63,6 +110,7 @@
   }
 
   .badge-image{
+    flex: 1;
     z-index: 1;
     width: var(--badge-size);
     height: var(--badge-size);
@@ -76,43 +124,101 @@
     }
   }
 
-  .badge-not-acquired{
-    font-size: x-large;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .badge-requirement-info{
+
+    flex: 1;
+    display: flex;
     font-size: large;
     white-space: nowrap;
     overflow: scroll;
+    align-items: center;
+    .medal{
+      font-size: x-small;
+    }
   }
 
-  .progress-bar-container {
-    height: 10px;
-    width: var(--badge-size);
-  }
-
-  .progress-bar {
-    background-color: var(--tertiary-very-low);
-    height: 5px;
-    border-radius: 2px;
-  }
+  .progress-container {
     
+    flex: 1;
+    width: var(--badge-size);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 20px;
+  }
+
+  .progress-check {
+    color: var(--blend-primary-secondary);
+    position: relative;
+    text-align: center;
+  }
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 2px;
+    filter: brightness(20%);
+
+  }
+  .progress-bar.medal-gold {
+    background: var(--gold);
+  }
+  .progress-bar.medal-silver {
+    background: var(--silver);
+  }
+  .progress-bar.medal-bronze {
+    background: var(--bronze);
+  }
+
+  .progress-bar-complete {
+    height: 10px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    position: absolute;
+  }
+  .progress-bar-complete.medal-gold {
+    background: var(--gold);
+  }
+  .progress-bar-complete.medal-silver {
+    background: var(--silver);
+  }
+  .progress-bar-complete.medal-bronze {
+    background: var(--bronze);
+  }
+
+  .badge-collect-button{
+    font-size: small;
+    height: 2em;
+  }
+
   .sparkle-effect {
     position: absolute;
+    left: 5px;
+    top: 5px;
     z-index: 2;
-    width: var(--badge-size);
-    height: var(--badge-size);
-    background-image: url('/assets/images/sparkle_sheet.png');
+    width: 40px;
+    height: 40px;
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
+
+  .sparkle-medal-gold {
+    background-image: url('/assets/images/sparkle_sheet_gold.png');
+  }
+  .sparkle-medal-silver {
+    background-image: url('/assets/images/sparkle_sheet_silver.png');
+  }  
+  .sparkle-medal-bronze {
+    background-image: url('/assets/images/sparkle_sheet_bronze.png');
+  }
+
+  .badge-image-container:hover .sparkle-effect {
+    animation: spriteAnimation 0.5s steps(28) forwards;
+  }
+
   @keyframes spriteAnimation {
     0% { background-position: 0 0; }
-    100% { background-position: calc(-11200px / var(--sparkle-scale)) 0; }
+    100% { background-position: -11200px 0; }
   }
   
   .animate-sparkle {
@@ -120,8 +226,26 @@
   }
 }
 
-.badge-container {
+.hover-target {
   position: relative;
-  display: block;
+  /* Additional styling for the hover target */
 }
 
+.popup-rectangle {
+  position: absolute;
+  width: 200px; /* Your desired width */
+  height: 100px; /* Your desired height */
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  display: none;
+  /* Position the popup rectangle as needed, this is an example */
+  top: 100%;
+  left: 0;
+}
+
+/* When .hover-target is hovered, show the .popup-rectangle */
+.hover-target:hover .popup-rectangle {
+  display: block;
+}

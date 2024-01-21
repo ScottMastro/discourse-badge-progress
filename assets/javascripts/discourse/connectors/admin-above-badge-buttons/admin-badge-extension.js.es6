@@ -12,6 +12,7 @@ export default class AdminBadgesAdditionalSettings extends Component {
   @tracked currentBadgeId=null;
   @tracked showOnProgressPage=false;
   @tracked isQuantitative=false;
+  @tracked units="";
   @tracked progressQuery="";
   @tracked saving=false;
   @tracked savingStatus="";
@@ -19,6 +20,7 @@ export default class AdminBadgesAdditionalSettings extends Component {
   @tracked allowClaim=false;
   @tracked showEarned=false;
   @tracked badgeRequirement;
+  @tracked isPopupVisible = false;
 
   get badgeGroupings() {
     return this.adminBadges.badgeGroupings;
@@ -65,6 +67,10 @@ export default class AdminBadgesAdditionalSettings extends Component {
         data["show_progress"] = this.showOnProgressPage;
         data["is_quantitative"] = this.isQuantitative;
         data["progress_query"] = this.progressQuery
+        
+        if(this.isQuantitative){
+          data["units"] = this.units;
+        }
       }
       data["allow_claim"] = this.allowClaim
       data["requirement"] = this.badgeRequirement
@@ -95,6 +101,7 @@ export default class AdminBadgesAdditionalSettings extends Component {
         this.showOnProgressPage = group.show_progress;
         this.isQuantitative = group.is_quantitative;
         this.progressQuery = group.progress_query;
+        this.units = group.units;
       }
     })
     .catch(error => {
@@ -103,7 +110,5 @@ export default class AdminBadgesAdditionalSettings extends Component {
 
     this.saving = false;
     this.savingStatus = "";
-
   }
-  
 }

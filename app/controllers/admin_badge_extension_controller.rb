@@ -32,6 +32,12 @@ class BadgeExtension::AdminBadgeExtensionController < ::ApplicationController
         show_progress: show_progress,
         is_quantitative: is_quantitative,
         progress_query: progress_query)
+
+      if is_quantitative
+        units = params[:units]
+        group.update(units: units)
+
+      end
     else
       success=false
     end

@@ -44,7 +44,7 @@ class BadgeExtension::BadgeExtensionController < ApplicationController
     return 0 if requirement.to_f <= 0
 
     division_result = progress.to_f / requirement.to_f
-    division_result.nan? ? 0 : [division_result, 1].min
+    division_result.nan? ? 0 : [division_result, 1].min*100
   end
 
   def execute_progress_query(query, user_id)

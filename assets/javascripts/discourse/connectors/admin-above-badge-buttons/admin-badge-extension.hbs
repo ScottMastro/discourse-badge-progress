@@ -49,6 +49,31 @@
       </div>
     </div>
 
+    {{#if this.isQuantitative}}
+
+    <div class="control-group">
+      <form class="form-horizontal">
+          <label for="units">{{i18n "badge_extension.admin.units"}}</label>
+          <Input
+            @value={{this.units}}
+            name="units"
+            @type="text"
+          />
+      </form>
+      <div>
+        <label>
+          <Input
+            @type="checkbox"
+            @checked={{this.allowClaim}}
+          />
+          {{i18n "badge_extension.admin.allow_claim"}}
+        </label>
+      </div>
+    </div>
+
+    {{/if}}
+
+
     <div class="control-group">
       <label for="query">{{i18n "badge_extension.admin.progress_query"}}</label>
       <AceEditor
@@ -58,6 +83,7 @@
       />
       {{i18n "badge_extension.admin.progress_query_info"}}
     </div>
+
   {{/if}}
 
   </div>
@@ -66,25 +92,12 @@
 <div class="control-group">
   <form class="form-horizontal">
       <label for="requirement">{{i18n "badge_extension.admin.badge_requirement"}}</label>
-
       <Input
         @value={{this.badgeRequirement}}
         name="requirement"
         @type="text"
-        @min=null
-        @max=null
       />
   </form>
-
-  <div>
-    <label>
-      <Input
-        @type="checkbox"
-        @checked={{this.allowClaim}}
-      />
-      {{i18n "badge_extension.admin.allow_claim"}}
-    </label>
-  </div>
 
   <div>
     <label>

@@ -23,7 +23,7 @@ export default class BadgeExtensionService extends Service {
       return null;
     }
   }
-
+  
   async pushGroupInformation(data) {
     const queryParams = new URLSearchParams(data).toString();
     const url = `/admin/badge_extension/save.json?${queryParams}`;

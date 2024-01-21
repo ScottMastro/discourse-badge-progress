@@ -5,6 +5,7 @@ en:
         edit_groups: "Edit groups"
         show_progress: "Show group on the badge progress page"
         quantitative: "Badge group is quantitative"
+        units: "Unit"
         show_earned: "Show badge on the badge progress page if earned"
         allow_claim: "Allow users to claim badge from interface"
         badge_requirement: "Badge Requirement"
